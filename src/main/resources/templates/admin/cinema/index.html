@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{layoutAdmin :: layout-head}">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Cinema </h4>
+                    <div class="row float-sm-right">
+                        <a class="btn btn-success mr-2" href="/admin/cinema/add">Add Cinema</a>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th> Cinema's Name</th>
+                                        <th> Description</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="cinema-table-body">
+<!--                                    <tr th:each="cinema : ${cinemas}">-->
+<!--                                        <tr>-->
+<!--                                        <td ></td>-->
+<!--                                        <td ></td>-->
+<!--                                        <td class=" text-right">-->
+<!--                                            <a class="btn bg-warning mr-2"-->
+<!--                                               >Edit</a>-->
+<!--                                            <a class="btn bg-danger mr-2"-->
+<!--                                               onclick="return confirm('Are you sure?')">Delete</a>-->
+<!--                                        </td>-->
+
+<!--                                    </tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+    <script th:inline="javascript">
+        $(document).ready(function () { //goi api để lấy về danh sách
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/cinemas', //thành phần url đường dẫn api
+                type: 'GET', //phương thức api
+                dataType: 'json', //loại data trả về
+                success: function (data) { //nếu api thành công thì vào success
+                console.log(data) //in ra data ra console
+                    let trHTML = ''; // tạo chuỗi string html
+                    $.each(data, function (i, item) {
+                        trHTML = trHTML + '<tr>'+
+                                        '<td>' + item.cinemaName + '</td>'+
+                                        '<td>' + item.description + '</td>'+
+                                        '<td class=" text-right">'+
+                                           '<a href="/admin/cinema/edit/'+item.id+'"  class="btn bg-warning mr-2">'+'Edit'+'</a>'+
+                                           '<a onclick="apiDeleteCinema(' + item.id +');" id="btn-delete" class="btn bg-danger mr-2">' +'Delete'+'</a>'+
+                                        '</td>'+
+
+                                   '</tr>';
+
+                    });
+                    $('#cinema-table-body').append(trHTML);
+                }
+            });
+
+        });
+
+            function apiDeleteCinema(id) {
+                if(confirm('Are you sure you want to DELETE?')) {
+                    $.ajax({
+                        url: 'http://localhost:8080/api/v1/cinemas/' + id,
+                        type: 'DELETE',
+                        success: function() {
+                            alert('Cinema deleted successfully!');
+                            window.location.href = "http://localhost:8080/admin/cinema";
+                        }
+                    });
+                }
+            }
+    </script>
+</div>
+</body>
+</html>

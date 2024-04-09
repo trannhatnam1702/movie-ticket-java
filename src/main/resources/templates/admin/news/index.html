@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{layoutAdmin :: layout-head}">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> News </h4>
+                    <div class="row float-sm-right">
+                        <a class="btn btn-success mr-2" href="/admin/news/add">Add News</a>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <div class="nav-item w-100 page-header">
+                        <form th:action="@{/admin/news/search}" method="get" class="input-group nav-link mt-2 mt-md-0  d-lg-flex search col-md-4" >
+                            <input aria-label="Search" name="keyword" type="search" class="form-control text-light" id="SearchString"  placeholder="Search news">
+                            <span class="input-group-append">
+                                 <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify" style="width: 40px;"></i></button>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th> Movie's Name</th>
+                                        <th> Title</th>
+                                        <th> Date</th>
+                                        <th> Description</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="news : ${news}">
+                                        <td th:text="${news.movie.movieName}"></td>
+                                        <td style="width: 200px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;" th:text="${news.Title}"></td>
+                                        <td th:text="${news.Date}"></td>
+                                        <td style="width: 400px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;" th:text="${news.Description}"></td>
+                                        <td class=" text-right">
+                                            <a class="btn bg-warning mr-2"
+                                               th:href="@{/admin/news/edit/{id}(id=${news.newId})}">Edit</a>
+                                            <a class="btn bg-danger mr-2"
+                                               th:href="@{/admin/news/delete/{id}(id=${news.newId})}"
+                                               onclick="return confirm('Are you sure?')">Delete</a>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example" style="display: flex; justify-content: flex-end; margin-top: 20px; font-size: 15px;" class="page">
+                    <ul class="pagination justify-content-center" th:each="i : ${#numbers.sequence(0, totalPages)}" style="">
+                        <li class="page-item" th:classappend="${currentPage == i} ? 'active'" style="margin: 0 3px;">
+                            <a class="page-link" th:href="@{/admin/news(pageNo=${i})}" th:text="${i+1}"></a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+</div>
+</body>
+</html>

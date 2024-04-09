@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Add News </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/admin/news/add}" th:object="${news}" method="post"
+                                  class="forms-sample" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label>Movie's Name</label>
+                                    <select class="form-control text-light" id="movie" name="movie.movieId">
+                                        <option value="">-- Select Movie --</option>
+                                        <option th:each="movie : ${movies}" th:value="${movie.movieId}"
+                                                th:text="${movie.movieName}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" class="form-control text-light" id="Title"
+                                           th:field="*{Title}" placeholder="Title">
+                                </div>
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="text" class="form-control text-light" id="Date"
+                                           th:field="*{Date}" placeholder="mm/dd/yyyy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Avatar upload</label>
+                                    <input type="file" id="file" name="file" class="file-upload-default">
+                                    <div class="input-group col-xs-12">
+                                        <input th:field="*{Image}" type="text"
+                                               class="form-control text-light file-upload-info" disabled
+                                               placeholder="Upload Image">
+                                        <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-primary"
+                                                    type="button">Upload</button>
+                                        </span>
+                                    </div>
+                                    <img id="previewImage" th:src="@{'/assets/img/' + ${news.Image}}" alt="portfolio"
+                                         style="width: 100px;"/>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="description">Description</label>
+                                    <input type="hidden" id="descriptionInput" name="Description" th:field="*{Description}" th:value="${Description}" />
+                                    <div id="description" class="form-control text-light" style="min-height: 200px;" rows="4" th:text="*{Description}"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mr-2">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/news"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+    <script th:inline="javascript">
+            document.getElementById("file").addEventListener("change", function() {
+            // Lấy tệp hình ảnh được chọn
+                var file = this.files[0];
+
+                // Tạo một đối tượng FileReader để đọc tệp hình ảnh
+                var reader = new FileReader();
+
+                // Xử lý sự kiện khi tệp hình ảnh được đọc
+                reader.onload = function(e) {
+                // Thay đổi thuộc tính src của thẻ <img> để hiển thị hình ảnh đã chọn
+                document.getElementById("previewImage").src = e.target.result;
+            }
+
+            // Đọc tệp hình ảnh
+            reader.readAsDataURL(file);
+            });
+    </script>
+    <script th:inline="javascript">
+     ClassicEditor
+        .create(document.querySelector('#description'))
+        .then(editor => {
+            // Gán nội dung CKEditor vào hidden field khi có thay đổi
+            editor.model.document.on('change:data', () => {
+                const data = editor.getData();
+                var strippedContent = data.replace(/<\/?p>/g, '');
+                document.querySelector('#descriptionInput').value = strippedContent;
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Profile </h4>
+                    <!--          <div class="row float-sm-right">-->
+                    <!--            <a class="btn btn-success mr-2" href="/admin/celebrity/add">Add Celebrity</a>-->
+                    <!--          </div>-->
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">username</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0" th:text="${user.username}"></p>
+                                </div>
+                            </div>
+                            <hr style="background-color: #2c2e33 ;">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0" th:text="${user.email}"></p>
+                                </div>
+                            </div>
+                            <hr style="background-color: #2c2e33 ;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+                <p>&copy;footer</p>
+            </th:block>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+
+</body>
+</html>

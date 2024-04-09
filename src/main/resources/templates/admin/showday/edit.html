@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Edit Show Day </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:object="${showDay}" id="showDayForm" class="forms-sample">
+                                <div class="form-group">
+                                    <label>Show Day's Id</label>
+                                    <input type="text" class="form-control text-light" id="ShowDayId"
+                                           th:field="*{showDayId}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Day</label>
+                                    <input type="date" class="form-control text-light" id="Day"
+                                           th:field="*{Day}" placeholder="mm/dd/yyyy">
+                                </div>
+                                <button type="button" class="btn btn-primary mr-2" id="submitBtn">Save  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/showday"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+    <script th:inline="javascript">
+        $('#submitBtn').click(function () {
+            var showDayData = {
+                day: $('#Day').val(),
+            };
+            var showDayId = $('#ShowDayId').val();
+            var url = '/api/v1/showday/' + showDayId;
+            $.ajax({
+                type: 'PUT',
+                url: url,
+                data: JSON.stringify(showDayData),
+                contentType: 'application/json',
+                success: function (data) {
+                    // Xử lý kết quả từ server (ví dụ hiển thị thông báo)
+                    alert('ShowDay updated successfully!');
+                    window.location.href = "http://localhost:8080/admin/showday";
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

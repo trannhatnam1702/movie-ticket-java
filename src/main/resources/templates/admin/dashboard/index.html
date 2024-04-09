@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <style>
+        #revenue-chart,
+        #tickets-sold-chart {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Dashboard </h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                        <h6 class="mb-0 text-muted font-weight-normal">REVENUE</h6>
+                                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                            <h2 class="mb-0" th:text="'$'+${revenue}"></h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                        <i class="icon-lg mdi mdi-cash-usd text-success ml-auto"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                        <h6 class="mb-0 text-muted font-weight-normal">MOVIES</h6>
+                                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                            <h2 class="mb-0" th:text="${movies}"></h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                        <i class="icon-lg mdi mdi-filmstrip text-primary ml-auto"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                        <h6 class="mb-0 text-muted font-weight-normal">TICKETS SOLD</h6>
+                                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                            <h2 class="mb-0" th:text="${reservation}"></h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                        <i class="icon-lg mdi mdi mdi-ticket text-danger ml-auto"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                        <h6 class="mb-0 text-muted font-weight-normal">USERS</h6>
+                                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                            <h2 class="mb-0" th:text="${users}"></h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                        <i class="icon-lg mdi mdi-account-multiple text-info ml-auto"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <label for="yearDropdown">Chọn Năm:</label>
+                            <select id="yearDropdown"></select>
+                            <h4 class="card-title">Line chart</h4>
+                            <div id="revenue-chart"></div>
+                            <div id="tickets-sold-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<script th:inline="javascript">
+      $(document).ready(function () {
+            var currentYear = new Date().getFullYear();
+
+            // Lấy reference đến dropdown
+            var yearDropdown = document.getElementById("yearDropdown");
+
+            // Thêm các option vào dropdown
+            for (var i = currentYear; i >= currentYear - 3; i--) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                yearDropdown.add(option);
+            }
+
+            $('#yearDropdown').trigger('change');
+
+             $('#yearDropdown').change(function () {
+            // Lấy giá trị được chọn trong dropdown
+                var selectedYear = $(this).val() ? $(this).val() : 2023;
+
+                // Gọi Ajax để lấy dữ liệu doanh thu theo năm
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/v1/revenue/' + selectedYear,
+                    success: function (data) {
+                        // Xử lý dữ liệu trả về, ví dụ: hiển thị trong một container
+                        getChart(data);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+             function getChart(data){
+             // Dữ liệu thống kê
+              $('#revenue-chart').empty();
+                $('#tickets-sold-chart').empty();
+
+                var salesData = formatData(data);
+
+                console.log(salesData)
+
+                // Biểu đồ Morris.js Bar Chart (Doanh thu)
+                new Morris.Bar({
+                    element: 'revenue-chart',
+                    data: salesData,
+                    xkey: 'month',
+                    ykeys: ['totalRevenue'],
+                    labels: ['Total Revenue'],
+                    xLabelAngle: 45,
+                });
+
+                // Biểu đồ Morris.js Bar Chart (Số vé bán được)
+                new Morris.Bar({
+                    element: 'tickets-sold-chart',
+                    data: salesData,
+                    xkey: 'month',
+                    ykeys: ['totalTicketsSold'],
+                    labels: ['Total Tickets Sold'],
+                    xLabelAngle: 45,
+                });
+            }
+
+           function formatData(responseData) {
+              return responseData.map(function (item) {
+                return {
+                  month: item[0],
+                  totalRevenue: item[1],
+                  totalTicketsSold: item[2]
+                };
+              });
+            }
+
+        });
+
+
+</script>
+</body>
+</html>

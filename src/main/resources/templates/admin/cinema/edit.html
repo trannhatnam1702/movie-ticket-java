@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Edit Cinema </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form  th:object="${cinema}" class="forms-sample" id="cinemaForm">
+                                <div class="form-group">
+                                    <label>Cinema's Id</label>
+                                    <input type="text" class="form-control text-light"
+                                           th:field="*{cinemaId}" id="cinemaId">
+                                </div>
+                                <div class="form-group">
+                                    <label>Cinema's Name</label>
+                                    <input type="text" class="form-control text-light" id="cinemaName"
+                                           th:field="*{cinemaName}" placeholder="Cinema's Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea th:field="*{Description}" class="form-control text-light" id="description"
+                                              placeholder="Description" rows="4"></textarea>
+                                </div>
+                                <button type="button" class="btn btn-primary mr-2" id="submitBtn">Save  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/cinema"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+                <p>&copy;footer</p>
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+    <script th:inline="javascript">
+        // Xử lý khi nút "Save" được nhấn
+        $('#submitBtn').click(function () {
+            var cinemaData = {
+                cinemaName: $('#cinemaName').val(),
+                description: $('#description').val()
+            };
+            var cinemaId = $('#cinemaId').val();
+            var url = '/api/v1/cinemas/' + cinemaId;
+            $.ajax({
+                type: 'PUT',
+                url: url,  // Đặt URL phù hợp với API của bạn
+                data: JSON.stringify(cinemaData),
+                contentType: 'application/json',
+                success: function (data) {
+                    // Xử lý kết quả từ server (ví dụ hiển thị thông báo)
+                    alert('Cinema upadted successfully!');
+                    window.location.href = "http://localhost:8080/admin/cinema";
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

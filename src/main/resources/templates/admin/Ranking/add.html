@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Add Ranking </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form   class="forms-sample" id="cinemaForm">
+                                <div class="form-group">
+                                    <label>Ranking's Name</label>
+                                    <input type="text" class="form-control text-light" id="rankName"
+                                           placeholder="Ranking's Name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Discount Percentage</label>
+                                    <input type="text" class="form-control text-light" id="discountPercentage"
+                                            placeholder="%">
+                                </div>
+                                <div class="form-group">
+                                    <label>Points</label>
+                                    <input type="text" class="form-control text-light" id="points"
+                                            placeholder="Points">
+                                </div>
+                                <button type="button" class="btn btn-primary mr-2" id="submitBtn">Save  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/ranking"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+</div>
+<script th:inline="javascript">
+    // Xử lý khi nút "Save" được nhấn
+    $('#submitBtn').click(function () {
+        var rankingData = {
+            rankName: $('#rankName').val(),
+            discountPercentage: $('#discountPercentage').val(),
+            points: $('#points').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/v1/ranking',  // Đặt URL phù hợp với API của bạn
+            data: JSON.stringify(rankingData),
+            contentType: 'application/json',
+            success: function (data) {
+                // Xử lý kết quả từ server (ví dụ hiển thị thông báo)
+                alert('Ranking created successfully!');
+                window.location.href = "http://localhost:8080/admin/ranking";
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
+<script src="/assets/js/jquery.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Edit Shows </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form  th:object="${shows}" class="forms-sample">
+                                <div class="form-group">
+                                    <label>Shows' Id</label>
+                                    <input type="text" class="form-control text-light" id="showId"
+                                           th:field="*{showId}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Cinema's Name</label>
+                                    <select class="form-control text-light" id="cinema" name="cinema.cinemaId">
+                                        <option value="">-- Select Cinema --</option>
+                                        <option th:each="cinema : ${cinemas}" th:value="${cinema.cinemaId}"
+                                                th:text="${cinema.cinemaName}"
+                                                th:selected="${shows.cinema.cinemaId} == ${cinema.cinemaId} ? true : false"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Movie's Name</label>
+                                    <select class="form-control text-light" id="movie" name="movie.movieId">
+                                        <option value="">-- Select Movie --</option>
+                                        <option th:each="movie : ${movies}" th:value="${movie.movieId}"
+                                                th:text="${movie.movieName}"
+                                                th:selected="${shows.movie.movieId} == ${movie.movieId} ? true : false"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Day</label>
+                                    <select class="form-control text-light" id="day" name="showDay.showDayId">
+                                        <option value="">-- Select Day --</option>
+                                        <option th:each="showDay : ${showDays}" th:value="${showDay.showDayId}"
+                                                th:text="${showDay.Day}"
+                                                th:selected="${shows.showDay.showDayId} == ${showDay.showDayId} ? true : false"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Time</label>
+                                    <select class="form-control text-light" id="time" name="showTime.showTimeId">
+                                        <option value="">-- Select Time --</option>
+                                        <option th:each="showTime : ${showTimes}" th:value="${showTime.showTimeId}"
+                                                th:text="${showTime.Time}"
+                                                th:selected="${shows.showTime.showTimeId} == ${showTime.showTimeId} ? true : false"></option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary mr-2" id="submitBtn">Save  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/shows"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+    <script th:inline="javascript">
+        $('#submitBtn').click(function () {
+            var showData = {
+                cinema: $('#cinema').val(),
+                movie: $('#movie').val(),
+                showDay: $('#day').val(),
+                showTime: $('#time').val(),
+            };
+            var showId = $('#showId').val();
+            var url = '/api/v1/shows/' + showId;
+            $.ajax({
+                type: 'PUT',
+                url: url,
+                data: JSON.stringify(showData),
+                contentType: 'application/json',
+                success: function (data) {
+                    // Xử lý kết quả từ server (ví dụ hiển thị thông báo)
+                    alert('Show updated successfully!');
+                    window.location.href = "http://localhost:8080/admin/shows";
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

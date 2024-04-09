@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{layoutAdmin :: layout-head}">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Edit Invoice </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:object="${invoice}" method="post" class="forms-sample">
+                                <div class="form-group">
+                                    <label>Invoice's Id</label>
+                                    <input type="text" class="form-control text-light"
+                                           th:field="*{invoiceId}" id="invoiceId">
+                                </div>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <select class="form-control text-light" id="user" name="user.userId">
+                                        <option value="">-- Select User's Id --</option>
+                                        <option th:each="user : ${users}" th:value="${user.userId}"
+                                                th:text="${user.userId}"
+                                                th:selected="${invoice.user.userId} == ${user.userId} ? true : false"></option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Created At</label>
+                                    <input type="date" class="form-control text-light" id="createdAt"
+                                           th:field="*{createdAt}" placeholder="mm/dd/yyyy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Quantity</label>
+                                    <input type="number" class="form-control text-light" id="quantity"
+                                           th:field="*{quantity}" placeholder="Number">
+                                </div>
+                                <div class="form-group">
+                                    <label>total</label>
+                                    <input type="text" class="form-control text-light" id="total"
+                                           th:field="*{total}" placeholder="Number">
+                                </div>
+                                <button type="button" class="btn btn-primary mr-2" id="submitBtn">Save  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/reservation"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+</div>
+<script th:inline="javascript">
+    $('#submitBtn').click(function () {
+        var invoiceData = {
+            user: $('#user').val(),
+            createdAt: $('#createdAt').val(),
+            quantity: $('#quantity').val(),
+            total: $('#total').val(),
+        };
+
+            var invoiceId = $('#invoiceId').val();
+            var url = '/api/v1/invoice/' + invoiceId;
+            $.ajax({
+                type: 'PUT',
+                url: url,  // Đặt URL phù hợp với API của bạn
+                data: JSON.stringify(invoiceData),
+                contentType: 'application/json',
+                success: function (data) {
+                    // Xử lý kết quả từ server (ví dụ hiển thị thông báo)
+                    alert('Invoice upadted successfully!');
+                    window.location.href = "http://localhost:8080/admin/invoice";
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+    });
+</script>
+</body>
+</html>

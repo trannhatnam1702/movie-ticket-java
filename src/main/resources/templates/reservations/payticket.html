@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moviepoint - Online Movie,Vedio and TV Show HTML Template</title>
+  <!-- Favicon Icon -->
+  <link rel="icon" type="image/png" href="/assets/img/favcion.png" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" media="all" />
+  <!-- Slick nav CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/slicknav.min.css" media="all" />
+  <!-- Iconfont CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/icofont.css" media="all" />
+  <!-- Owl carousel CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.css">
+  <!-- Popup CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/magnific-popup.css">
+  <!-- Main style CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/style.css" media="all" />
+  <!-- Responsive CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css" media="all" />
+  <link href="/assets/css/register.css" rel="stylesheet" />
+  <!--    <link href="/PagedList.css" rel="stylesheet" />-->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <style>
+     #countdown {
+            font-size: 2em;
+            color: #eb315a;
+        }
+
+       .key{
+          color: #eb315a;
+       }
+
+       .val {
+           line-height: 24px;
+          font-size: 14px;
+          color: #b6b7b9;
+       }
+
+       .content{
+          margin-bottom: 5px;
+       }
+
+       .paypal {
+          padding: 10px;
+          background: #0070ba;
+          color: #fff;
+       }
+
+
+  </style>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<section class="blog-area" style="padding-top: 160px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-title pb-20">
+          <h1><i class="icofont icofont-coffee-cup"></i>Movie Ticket</h1>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-title pb-20" style="margin-top: 10px;">
+          <h4>Time to pay: </h4> <span id="countdown">05:00</span>
+        </div>
+      </div>
+      <div class="col-lg-6">
+          <div id="ticketInfo">
+
+            <div th:each="cinema_name : ${cinema_name}" class="content">
+              <h4 class="key">Cinema: </h4> <span id="location" class="val" th:text="${cinema_name}" ></span>
+            </div>
+            <div th:each="day : ${day}" class="content">
+              <h4 class="key">Day: </h4> <span class="val" id="day" th:text="${day}"></span>
+            </div>
+            <div th:each="time : ${time}" class="content">
+              <h4 class="key">Time: </h4> <span class="val" id="time" th:text="${time}"></span>
+            </div>
+            <div class="content">
+              <h4 class="key">Movie name: </h4> <span class="val" id="movie-name" th:text="${movie.movieName}"></span>
+            </div>
+            <div class="content">
+              <h4 class="key">Seats: </h4> <span class="val" id="ticket-number"></span>
+            </div>
+
+
+          </div>
+        </div>
+      <div class="col-lg-6">
+        <div id="movieInfo">
+          <div class="content">
+            <h4 class="key">Quantity: </h4> <span class="val" id="quantity"></span>
+          </div>
+          <div class="content">
+            <h4 class="key">Price: </h4> <span class="val" id="price"></span>
+          </div>
+
+          <div class="content">
+            <h4 class="key">Discount: </h4> <span class="val" id="discount"></span>
+          </div>
+          <div class="content">
+            <h4 class="key">Total: </h4> <span class="val" id="total"></span>
+          </div>
+        </div>
+    </div>
+
+      <div class="col-lg-12" style="margin-top: 20px;">
+        <a href="#" id="paypal" class="paypal">Checkout with PayPal</a>
+        <form id="paymentForm" action="/payment/pay" method="post">
+          <input type="hidden" name="showId" id="showIdInput" />
+          <input type="hidden" name="price" id="priceInput" />
+          <input type="hidden" name="seat" id="seatInput" />
+          <button type="submit"></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section><!-- blog area end -->
+<th:block th:replace="layout :: footer"></th:block>
+<!-- jquery main JS -->
+<script src="/assets/js/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/assets/js/bootstrap.min.js"></script>
+<!-- Slick nav JS -->
+<script src="/assets/js/jquery.slicknav.min.js"></script>
+<!-- owl carousel JS -->
+<script src="/assets/js/owl.carousel.min.js"></script>
+<!-- Popup JS -->
+<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+<!-- Isotope JS -->
+<script src="/assets/js/isotope.pkgd.min.js"></script>
+<!-- main JS -->
+<script src="/assets/js/main.js"></script>
+
+<script th:inline="javascript">
+     $(document).ready(function() {
+         var showId = sessionStorage.getItem('showId');
+         var price = sessionStorage.getItem('price');
+         var seat = sessionStorage.getItem('seat');
+
+         $('#ticket-number').text(seat);
+        var arrayseat = seat.trim().split(" ").map(Number);
+
+        var quantity = arrayseat.length;
+        $('#quantity').text(quantity);
+        var price = 9 * quantity;
+        $('#price').text(price);
+
+        var countdownElement = document.getElementById('countdown');
+        var countdownTime = 5 * 60; // 5 phút
+        var countdownInterval = setInterval(function () {
+            var minutes = Math.floor(countdownTime / 60);
+            var seconds = countdownTime % 60;
+
+            // Định dạng thời gian để có dạng mm:ss
+            var formattedTime = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+            // Hiển thị thời gian trên trang
+            countdownElement.textContent = formattedTime;
+
+            // Giảm thời gian
+            countdownTime--;
+
+            // Kiểm tra nếu đếm ngược hết thời gian
+            if (countdownTime < 0) {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = 'time up !';
+
+              $.ajax({
+                url: '/api/seats/release',
+                type: 'POST',
+                data: {
+                  seatId: seat,
+
+                },
+                success: function(data) {
+                   var expiredTransactionMessage = "The trading session has expired. You will be redirected to the ticket booking page!";
+                    showConfirmationAlert(expiredTransactionMessage);
+                }
+            });
+            }
+        }, 1000);
+
+        function showConfirmationAlert(message) {
+            var isConfirmed = confirm(message);
+
+            if (isConfirmed) {
+
+                window.location.href = "/";
+            } else {
+                window.location.href = "/";
+            }
+        }
+
+
+        $.ajax({
+                url: '/api/v1/datajax-buyticket',
+                type: 'GET',
+                data: {
+                  showId: showId,
+                  price: price,
+                  seat: seat
+                },
+                success: function(data) {
+                    $('#discount').text(data);
+                    let total = price - price * data/100;
+                    $('#total').text(total)
+                }
+        });
+
+        window.addEventListener('beforeunload', async function (e) {
+            e.preventDefault();
+
+            try {
+                await $.ajax({
+                    url: '/api/seats/release',
+                    type: 'POST',
+                    data: {
+                        seatId: seat,
+                    }
+                });
+
+                console.log("Ajax request completed successfully.");
+            } catch (error) {
+                console.error("Error in Ajax request:", error);
+            }
+        });
+
+        $('#paypal').click(function(){
+            let total = $('#total').text();
+            $('#showIdInput').val(showId);
+            $('#priceInput').val(total);
+            $('#seatInput').val(seat);
+
+            $('#paymentForm').submit();
+        });
+     });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+
+body {
+    padding: 40px 0;
+    background: #13151f;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    height: 85vh; /* Adjust the height to your needs */
+    position: relative;
+  }
+    h1 {
+      color: #fff;
+      font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+      font-weight: 900;
+      font-size: 40px;
+      margin-bottom: 10px;
+      animation: animateContainer 0.75s ease-out forwards 0.75s;
+      margin-top: 10px;
+      text-align: center;
+    }
+    p {
+      color: #fff;
+      font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+      font-size:20px;
+      animation: animateContainer 0.75s ease-out forwards 0.75s;
+      margin: 0;
+      text-align: center;
+    }
+  i {
+    color: #9ABC66;
+    font-size: 100px;
+    line-height: 200px;
+    margin-left:-15px;
+  }
+  .card {
+    background: #24262d;
+    padding: 70px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px #C8D0D8;
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+  .main-container {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .check-container {
+    width: 8.25rem;
+    height: 10.5rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+    .check-background {
+      width: 100%;
+      height: calc(100% - 1.25rem);
+      background: #eb315a;
+      /* box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset,
+        0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset; */
+      transform: scale(0.84);
+      border-radius: 50%;
+      animation: animateContainer 0.75s ease-out forwards 0.75s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+    
+  @keyframes animateContainer {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    25% {
+      opacity: 1;
+      transform: scale(0.9);
+    }
+    43.75% {
+      transform: scale(1.15);
+    }
+    62.5% {
+      transform: scale(1);
+    }
+    81.25% {
+    }
+    100% {
+      opacity: 1;
+      
+    }
+  }
+  
+  @keyframes animateCheck {
+    from {
+      stroke-dashoffset: 80;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  @keyframes animateShadow {
+    0% {
+      opacity: 0;
+      width: 100%;
+      height: 15%;
+    }
+    25% {
+      opacity: 0.25;
+    }
+    43.75% {
+      width: 40%;
+      height: 7%;
+      opacity: 0.35;
+    }
+    100% {
+      width: 85%;
+      height: 15%;
+      opacity: 0.25;
+    }
+  }
+  
+  a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+}
+
+a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+.next {
+  background-color: #eb315a;
+  color: white;
+  position: absolute;  
+  text-decoration: none;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  font-size: 17px;
+  width: 80px;
+  text-align: center;
+  animation: animateContainer 0.75s ease-out forwards 0.75s;
+
+}
+
+
+
+  

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Edit Seat </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:object="${seat}" class="forms-sample" id="seatForm">
+                                <div class="form-group">
+                                    <label>Seat's Id</label>
+                                    <input type="text" class="form-control text-light" id="seatId"
+                                           th:field="*{seatId}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Seat No.</label>
+                                    <input type="text" class="form-control text-light" id="seatNo"
+                                           th:field="*{seatNo}" placeholder="Number">
+                                </div>
+                                <div class="form-check  form-check-primary mb-5">
+                                    <label class="">Status</label>
+                                    <div class="checkbox form-check-primary">
+                                        <input type="checkbox" class="form-check-input" id="Status"
+                                               th:field="*{Status}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control text-light" id="Price"
+                                           th:field="*{Price}" placeholder="$">
+                                </div>
+                                <button type="button" class="btn btn-primary mr-2" id="submitBtn">Save  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/seat"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+    <script th:inline="javascript">
+        $('#submitBtn').click(function () {
+            var seatData = {
+                seatNo: $('#seatNo').val(),
+                status: $('#Status').val(),
+                price: $('#Price').val(),
+            };
+            var seatId = $('#seatId').val();
+            var url = '/api/v1/seat/' + seatId;
+            $.ajax({
+                type: 'PUT',
+                url: url,
+                data: JSON.stringify(seatData),
+                contentType: 'application/json',
+                success: function (data) {
+                    // Xử lý kết quả từ server (ví dụ hiển thị thông báo)
+                    alert('Seat updated successfully!');
+                    window.location.href = "http://localhost:8080/admin/seat";
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

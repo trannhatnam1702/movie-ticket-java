@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layoutAdmin :: layout-head">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Add Reservation </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:object="${reservation}" method="post" class="forms-sample">
+                                <div class="form-group">
+                                    <label>Reservation' Id</label>
+                                    <input type="text" class="form-control text-light" id="reservationId"
+                                           th:field="*{reservationId}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Seat's ID</label>
+                                    <select class="form-control text-light" id="seat" name="seat.seatId">
+                                        <option value="">-- Select Seat's Id --</option>
+                                        <option th:each="seat : ${seats}" th:value="${seat.seatId}"
+                                                th:text="${seat.seatId}"
+                                                th:selected="${reservation.seat.seatId} == ${seat.seatId} ? true : false"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Shows' Id</label>
+                                    <select class="form-control text-light" id="shows" name="shows.showId">
+                                        <option value="">-- Select Shows' Id --</option>
+                                        <option th:each="shows : ${shows}" th:value="${shows.showId}"
+                                                th:text="${shows.showId}"
+                                                th:selected="${reservation.shows.showId} == ${shows.showId} ? true : false"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Invoice's Id</label>
+                                    <select class="form-control text-light" id="invoice" name="invoice.invoiceId">
+                                        <option value="">-- Select Invoice's Id --</option>
+                                        <option th:each="invoice : ${invoices}" th:value="${invoice.invoiceId}"
+                                                th:text="${invoice.invoiceId}"
+                                                th:selected="${reservation.invoice.invoiceId} == ${invoice.invoiceId} ? true : false"></option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary mr-2" id="submitBtn">Save  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/reservation"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+</div>
+<script th:inline="javascript">
+    $('#submitBtn').click(function () {
+       var reservationData = {
+                seat: $('#seat').val(),
+                shows: $('#shows').val(),
+                invoice: $('#invoice').val(),
+            };
+            var seatId = $('#reservationId').val();
+            var url = '/api/v1/reservation/' + seatId;
+            $.ajax({
+                type: 'PUT',
+                url: url,
+                data: JSON.stringify(reservationData),
+                contentType: 'application/json',
+                success: function (data) {
+                    alert('Reservation updated successfully!');
+                    window.location.href = "http://localhost:8080/admin/reservation";
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+    });
+</script>
+</body>
+</html>

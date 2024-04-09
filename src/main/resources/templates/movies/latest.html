@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Moviepoint - Online Movie,Vedio and TV Show HTML Template</title>
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="/assets/img/favcion.png" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" media="all" />
+    <!-- Slick nav CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/slicknav.min.css" media="all" />
+    <!-- Iconfont CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/icofont.css" media="all" />
+    <!-- Owl carousel CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.css">
+    <!-- Popup CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/magnific-popup.css">
+    <!-- Main style CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" media="all" />
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css" media="all" />
+    <link href="/assets/css/register.css" rel="stylesheet" />
+    <link href="/PagedList.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    .page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #eb315a;
+
+    }
+    .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover{
+        z-index: 1;
+        color: #fff;
+        background-color: #eb315a;
+    }
+  </style>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+
+<!-- breadcrumb area start -->
+<section class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-area-content">
+                    <h1>Movies</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- breadcrumb area end -->
+<section class="portfolio-area pt-60">
+    <div class="container">
+        <div class="row flexbox-center">
+            <div class="col-lg-6 text-center text-lg-left">
+                <div class="section-title">
+                    <h1><i class="icofont icofont-movie"></i> Spotlight This Month</h1>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="portfolio-menu">
+                    <ul>
+                        <li ><a href="/movie">All</a></li>
+                        <li><a href="/movie/comming">Comming Soon</a> </li>
+                        <li class="active"><a href="/movie/latest">Latest</a> </li>
+                        <li>Recently Released</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="row portfolio-item">
+
+                    <div class="col-md-4 col-sm-6 soon released" th:each="movie : ${allMovies}" >
+                        <div class="single-portfolio">
+                            <div class="single-portfolio-img">
+                                <img style="width: 255px; height: 350px;" th:src="@{'/assets/img/' + ${movie.imageURL}}" alt="portfolio" />
+                                <a  th:href="'https://www.youtube.com/watch?' + ${movie.trailer}" class="popup-youtube">
+                                    <i class="icofont icofont-ui-play"></i>
+                                </a>
+                            </div>
+                            <div class="portfolio-content">
+                                <h2 style=" overflow: hidden; text-overflow: ellipsis; height: 30px;"><a th:text ="${movie.movieName}"></a></h2>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--        @*phan trang*@-->
+                <!--        <div style="display: flex; justify-content: flex-end; margin-top: 20px; font-size: 15px;" class="page">-->
+                <!--          @*Page: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount*@-->
+
+                <!--          @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))-->
+                <!--        </div>-->
+<!--                <nav aria-label="Page navigation example" style="display: flex; justify-content: flex-end; margin-top: 20px; font-size: 15px;" class="page">-->
+<!--                    <ul class="pagination justify-content-center" th:each="i : ${#numbers.sequence(0, totalPages)}" style="">-->
+<!--                        <li class="page-item" th:classappend="${currentPage == i} ? 'active'" style="margin: 0 3px;">-->
+<!--                            <a class="page-link" th:href="@{/movie(pageNo=${i})}" th:text="${i+1}"></a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </nav>-->
+            </div>
+            <div class="col-lg-3 text-center text-lg-left">
+                <div class="portfolio-sidebar">
+                    <img src="/assets/img/sidebar/sidebar1.png" alt="sidebar" />
+                    <img src="/assets/img/sidebar/sidebar2.png" alt="sidebar" />
+                    <img src="/assets/img/sidebar/sidebar3.png" alt="sidebar" />
+                    <img src="/assets/img/sidebar/sidebar4.png" alt="sidebar" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- portfolio section end -->
+<!-- video section start -->
+<section class="video ptb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title pb-20">
+                    <h1><i class="icofont icofont-film"></i> Trailers & Videos</h1>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="video-slider mt-20">
+                    <div class="video-area">
+
+                        <img src="/assets/img/video/video2.png" alt="video" />
+                        <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" class="popup-youtube">
+                            <i class="icofont icofont-ui-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-area">
+                        <img src="/assets/img/video/video3.png" alt="video" />
+                        <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" class="popup-youtube">
+                            <i class="icofont icofont-ui-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-area">
+                        <img src="/assets/img/video/video4.png" alt="video" />
+                        <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" class="popup-youtube">
+                            <i class="icofont icofont-ui-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-area">
+                        <img src="/assets/img/video/video5.png" alt="video" />
+                        <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" class="popup-youtube">
+                            <i class="icofont icofont-ui-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-area">
+                        <img src="/assets/img/video/video2.png" alt="video" />
+                        <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" class="popup-youtube">
+                            <i class="icofont icofont-ui-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-area">
+                        <img src="/assets/img/video/video3.png" alt="video" />
+                        <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" class="popup-youtube">
+                            <i class="icofont icofont-ui-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-area">
+                        <img src="/assets/img/video/video4.png" alt="video" />
+                        <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" class="popup-youtube">
+                            <i class="icofont icofont-ui-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-area">
+                        <img src="/assets/img/video/video5.png" alt="video" />
+                        <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" class="popup-youtube">
+                            <i class="icofont icofont-ui-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- video section end -->
+
+
+<th:block th:replace="layout :: footer"></th:block>
+<!-- jquery main JS -->
+<script src="/assets/js/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/assets/js/bootstrap.min.js"></script>
+<!-- Slick nav JS -->
+<script src="/assets/js/jquery.slicknav.min.js"></script>
+<!-- owl carousel JS -->
+<script src="/assets/js/owl.carousel.min.js"></script>
+<!-- Popup JS -->
+<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+<!-- Isotope JS -->
+<script src="/assets/js/isotope.pkgd.min.js"></script>
+<!-- main JS -->
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

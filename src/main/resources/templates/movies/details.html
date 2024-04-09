@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moviepoint - Online Movie,Vedio and TV Show HTML Template</title>
+  <!-- Favicon Icon -->
+  <link rel="icon" type="image/png" href="/assets/img/favcion.png" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" media="all" />
+  <!-- Slick nav CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/slicknav.min.css" media="all" />
+  <!-- Iconfont CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/icofont.css" media="all" />
+  <!-- Owl carousel CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.css">
+  <!-- Popup CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/magnific-popup.css">
+  <!-- Main style CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/style.css" media="all" />
+  <!-- Responsive CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css" media="all" />
+  <link href="/assets/css/register.css" rel="stylesheet" />
+  <link href="/PagedList.css" rel="stylesheet" />
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <style>
+  ._6a {
+  display: none !important;
+  }
+    .comment {
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.comment-author {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.comment-content {
+  font-size: 14px;
+}
+    .rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+.rating {
+  display: inline-block;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.rating label:before {
+  content: '\2605';
+  font-size: 25px;
+}
+
+.rating input:checked ~ label {
+  color: #ffcc00;
+}
+.average-rating {
+    margin-right: 7px;
+    color: white;
+    padding: 4px;
+    display: inline-block;
+    background-color: #eb315a;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+    .fa {
+  margin-right: 15px;
+  font-size: 23px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 50%;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+  </style>
+</head>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v18.0&appId=1047818103080635" nonce="1pOhBo2G"></script>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+
+<section class="breadcrumb-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-area-content">
+          <h1>Movie Detalied</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- breadcrumb area end -->
+<!-- transformers area start -->
+<section class="transformers-area" th:each="movie : ${movie}">
+  <div class="container">
+    <div class="transformers-box">
+      <div class="row flexbox-center">
+        <div class="col-lg-5 text-lg-left text-center">
+          <div class="transformers-content">
+            <img style=" width: 75%; height: auto; padding-left: 45px;" th:src="@{'/assets/img/' + ${movie.imageURL}}" alt="about" />
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="transformers-content">
+            <h2 th:text ="${movie.movieName}"></h2>
+
+            <p>3D | Animation | Action | Sci-Fi</p>
+            <ul>
+              <li>
+                <div class="transformers-left">
+                  Genres:
+                </div>
+                <div class="transformers-right">
+                  <span th:text="${movie.genres}">  </span>
+                </div>
+              </li>
+              <li>
+                <div class="transformers-left">
+                  Writer:
+                </div>
+                <div class="transformers-right">
+                  <span th:text="${movie.writer}">  </span>
+                </div>
+              </li>
+              <li>
+                <div class="transformers-left">
+                  Director:
+                </div>
+                <div class="transformers-right">
+                  <span th:text="${movie.director}">  </span>
+                </div>
+              </li>
+              <li>
+                <div class="transformers-left">
+                  Time:
+                </div>
+                <div class="transformers-right">
+                  <span th:text="${movie.time}">  </span>
+                </div>
+              </li>
+              <li>
+                <div class="transformers-left">
+                  Language:
+                </div>
+                <div class="transformers-right">
+                  <span th:text="${movie.language}">  </span>
+                </div>
+              </li>
+              <li>
+                <div class="transformers-left">
+                  Cinema:
+                </div>
+                <div class="transformers-right" th:each="cinema : ${allCinema}">
+                  <span th:text="${cinema}" class="mr-2"></span>
+                </div>
+              </li>
+              <li>
+                <div class="transformers-left">
+                  Day:
+                </div>
+                <div class="transformers-right" th:each="day : ${allDay}">
+                  <span style="padding-right: 10px" th:text="${day}">  </span>
+                </div>
+              </li>
+              <li>
+                <div class="transformers-left">
+                  Time:
+                </div>
+                <div class="transformers-right" th:each="time : ${allTime}">
+                  <span style="padding-right: 10px" th:text="${time}"></span>
+                </div>
+              </li>
+              <li style="height: 17px; margin-bottom: 18px; ">
+                <div class="transformers-left">
+                  Share:
+                </div>
+                <div class="transformers-right" style="overflow: hidden;">
+                  <div class="fb-share-button"
+                       th:data-href="${shareDataHref}"
+                       data-layout="" data-size="">
+                    <a target="_blank"
+                       th:href="${shareHref}"
+                       class="fb-xfbml-parse-ignore">
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li style="margin-bottom: 20px;">
+                <div class="transformers-left">
+                  Rating:
+                </div>
+                <form action="@{/value/ratings}" method="post">
+                  <div class="rating" >
+                    <span class="average-rating" th:text="${averageRating}"></span>
+                    <input type="radio" id="star10" name="value" value="10" th:checked="${rateValue == 10}">
+                    <label for="star10" onclick="submitRating(10)"></label>
+                    <input type="radio" id="star9" name="value" value="9" th:checked="${rateValue == 9}">
+                    <label for="star9" onclick="submitRating(9)"></label>
+                    <input type="radio" id="star8" name="value" value="8" th:checked="${rateValue == 8}">
+                    <label for="star8" onclick="submitRating(8)"></label>
+                    <input type="radio" id="star7" name="value" value="7" th:checked="${rateValue == 7}">
+                    <label for="star7" onclick="submitRating(7)"></label>
+                    <input type="radio" id="star6" name="value" value="6" th:checked="${rateValue == 6}">
+                    <label for="star6" onclick="submitRating(6)"></label>
+                    <input type="radio" id="star5" name="value" value="5" th:checked="${rateValue == 5}">
+                    <label for="star5" onclick="submitRating(5)"></label>
+                    <input type="radio" id="star4" name="value" value="4" th:checked="${rateValue == 4}">
+                    <label for="star4" onclick="submitRating(4)"></label>
+                    <input type="radio" id="star3" name="value" value="3" th:checked="${rateValue == 3}">
+                    <label for="star3" onclick="submitRating(3)"></label>
+                    <input type="radio" id="star2" name="value" value="2" th:checked="${rateValue == 2}">
+                    <label for="star2" onclick="submitRating(2)"></label>
+                    <input type="radio" id="star1" name="value" value="1" th:checked="${rateValue == 1}">
+                    <label for="star1" onclick="submitRating(1)"></label>
+                  </div>
+                </form>
+
+
+                <!--                <div class="transformers-left" style="margin-left:5px;">-->
+                <!--                  (<span id="totalReviewCount" th:text="${totalReviewCount}"></span> reviews)-->
+                <!--                </div>-->
+                <div class="transformers-left" style="margin-left:5px;">
+                  (<span id="totalReviewCount" th:text="${totalReviewCount}"></span> reviews)
+                </div>
+                <div style="display: none;"  id="selectedRating"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <a class="theme-btn" th:href="@{/reservations/{showId}/{movieId}(showId='1', movieId=${movie.movieId})}">
+        <i class="icofont icofont-ticket"></i> BUY TICKET
+      </a>
+      <a class="theme-btn theme-btn2 popup-youtube" th:href="'https://www.youtube.com/watch?' + ${movie.trailer}" style="
+              position: absolute;
+              right: 215px;
+              bottom: 0;
+              border-radius: 6px;
+      ">Trailer</a>
+    </div>
+  </div>
+</section><!-- transformers area end -->
+<!-- details area start -->
+<section class="details-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="details-content">
+
+          <div class="details-overview"  th:each="movie : ${movie}">
+            <h2>Overview</h2>
+            <p th:text="${movie.Description}"> </p>
+          </div>
+          <div class="details-reply">
+            <h2>Leave a Reply</h2>
+            <form method="post" th:action="@{/comments/create}">
+              <div class="row">
+<!--                <div class="col-lg-4">-->
+<!--                  <div class="select-container">-->
+<!--                    <input type="text" placeholder="Name"/>-->
+<!--                    <i class="icofont icofont-ui-user"></i>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4">-->
+<!--                  <div class="select-container">-->
+<!--                    <input type="text" placeholder="Email"/>-->
+<!--                    <i class="icofont icofont-envelope"></i>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <div class="col-lg-4" style="display: none" th:each="movie : ${movie}">
+                  <div class="select-container">
+                    <input type="text" id="movieId" name="movieId" th:value="${movie.movieId}"/>
+                    <i class="icofont icofont-phone"></i>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="textarea-container">
+                    <textarea style="background: #24262d; width: 100%; padding: 8px 15px; border: none;"
+                              type="text" class="input" id="content" name="content" placeholder="Type Here Message"></textarea>
+                    <button><i class="icofont icofont-send-mail"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="field button-field">
+                <button  class="theme-btn theme-btn2" type="submit">Post Comment</button>
+              </div>
+            </form>
+          </div>
+          <div>
+            <h2>Comments</h2>
+            <div class="comment"  th:each="comment : ${comments}">
+              <div class="comment-author" th:text="${comment.user.username}"></div>
+              <div class="comment-content" th:text="${comment.content}"></div>
+            </div>
+          </div>
+          <div class="details-thumb">
+            <div class="details-thumb-prev">
+              <div class="thumb-icon">
+                <i class="icofont icofont-simple-left"></i>
+              </div>
+              <div class="thumb-text">
+                <h4>Previous Post</h4>
+                <p>Standard Post With Gallery</p>
+              </div>
+            </div>
+            <div class="details-thumb-next">
+              <div class="thumb-text">
+                <h4>Next Post</h4>
+                <p>Standard Post With Preview Image</p>
+              </div>
+              <div class="thumb-icon">
+                <i class="icofont icofont-simple-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-3 text-center text-lg-left">
+        <div class="portfolio-sidebar">
+          <img src="/assets/img/sidebar/sidebar1.png" alt="sidebar" />
+          <img src="/assets/img/sidebar/sidebar2.png" alt="sidebar" />
+          <img src="/assets/img/sidebar/sidebar4.png" alt="sidebar" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- details area end -->
+
+
+<th:block th:replace="layout :: footer"></th:block>
+<!-- jquery main JS -->
+<script src="/assets/js/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/assets/js/bootstrap.min.js"></script>
+<!-- Slick nav JS -->
+<script src="/assets/js/jquery.slicknav.min.js"></script>
+<!-- owl carousel JS -->
+<script src="/assets/js/owl.carousel.min.js"></script>
+<!-- Popup JS -->
+<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+<!-- Isotope JS -->
+<script src="/assets/js/isotope.pkgd.min.js"></script>
+<!-- main JS -->
+<script src="/assets/js/main.js"></script>
+<script src="/js/rating.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{layoutAdmin :: layout-head}">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Comments </h4>
+                </div>
+                <div class="navbar-nav w-100">
+                    <div class="nav-item w-100 page-header">
+                        <form th:action="@{/admin/comment/search}" method="get"
+                              class="input-group nav-link mt-2 mt-md-0  d-lg-flex search col-md-4">
+                            <input aria-label="Search" name="keyword" type="search" class="form-control text-light"
+                                   id="SearchString" placeholder="Search comment">
+                            <span class="input-group-append">
+                                 <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"
+                                                                                  style="width: 40px;"></i></button>
+                            </span>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th> User's Name</th>
+                                        <th> Movie's Name</th>
+                                        <th> Content</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody id="comment-table-body">
+<!--                                    <tr th:each="comment : ${comments}">-->
+<!--                                        <td th:text="${comment.user.username}"></td>-->
+<!--                                        <td th:text="${comment.movie.movieName}"></td>-->
+<!--                                        <td th:text="${comment.content}"></td>-->
+<!--                                        <td class=" text-right">-->
+<!--                                            <a class="btn bg-danger mr-2"-->
+<!--                                               th:href="@{/admin/comment/delete/{id}(id=${comment.commentId})}"-->
+<!--                                               onclick="return confirm('Are you sure?')">Delete</a>-->
+<!--                                        </td>-->
+
+<!--                                    </tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <nav aria-label="Page navigation example" style="display: flex; justify-content: flex-end; margin-top: 20px; font-size: 15px;" class="page">
+                    <ul class="pagination justify-content-center" th:each="i : ${#numbers.sequence(0, totalPages)}" style="">
+                        <li class="page-item" th:classappend="${currentPage == i} ? 'active'" style="margin: 0 3px;">
+                            <a class="page-link" th:href="@{/admin/shows(pageNo=${i})}" th:text="${i+1}"></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/comment',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                console.log(data)
+                    let trHTML = '';
+                    $.each(data, function (i, item) {
+                        trHTML = trHTML + '<tr>'+
+                                        '<td>' + item.user + '</td>'+
+                                        '<td>' + item.movie + '</td>'+
+                                        '<td>' + item.content + '</td>'+
+                                        '<td class=" text-right">'+
+                                           '<a onclick="apiDeleteComment(' + item.id +');" id="btn-delete" class="btn bg-danger mr-2">' +'Delete'+'</a>'+
+                                        '</td>'+
+
+                                   '</tr>';
+
+                    });
+                    $('#comment-table-body').append(trHTML);
+                }
+            });
+
+        });
+
+            function apiDeleteComment(id) {
+                if(confirm('Are you sure you want to DELETE?')) {
+                    $.ajax({
+                        url: 'http://localhost:8080/api/v1/comment/' + id,
+                        type: 'DELETE',
+                        success: function() {
+                            alert('Comment deleted successfully!');
+                            window.location.href = "http://localhost:8080/admin/comment";
+                        }
+                    });
+                }
+            }
+    </script>
+</div>
+</body>
+</html>

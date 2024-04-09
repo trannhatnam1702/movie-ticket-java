@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{layoutAdmin :: layout-head}">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Movies </h4>
+                    <div class="row float-sm-right">
+                        <a class="btn btn-success mr-2" href="/admin/movie/add">Add Movie</a>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <div class="nav-item w-100 page-header">
+                        <form th:action="@{/admin/movie/search}" method="get" class="input-group nav-link mt-2 mt-md-0  d-lg-flex search col-md-4" >
+                            <input aria-label="Search" name="keyword" type="search" class="form-control text-light" id="SearchString"  placeholder="Search movie">
+                            <span class="input-group-append">
+                                 <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify" style="width: 40px;"></i></button>
+                            </span>
+
+                        </form>
+                        <div class="row float-sm-right">
+                            <a class="btn btn-info mr-2" th:href="@{/admin/movie/export}">Export To Excel</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 grid-margin stretch-card" th:each="movie : ${movies}">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="row forms-sample float-sm-right">
+                                    <a class="btn bg-warning mr-2"
+                                       th:href="@{/admin/movie/edit/{id}(id=${movie.movieId})}">Edit</a>
+                                    <a class="btn bg-danger mr-2"
+                                       th:href="@{/admin/movie/delete/{id}(id=${movie.movieId})}"
+                                       onclick="return confirm('Are you sure?')"
+                                    >Delete</a>
+                                </form>
+                                <h4 class="card-title"><a class="text-white " href=""
+                                                          th:text="${movie.movieName}"></a></h4>
+                                <p class="card-description"></p>
+                                <div class="form-group full-width" style="width: 100%">
+                                    <img th:src="@{'/assets/img/' + ${movie.imageURL}}" alt="portfolio"
+                                         style="width: inherit; height: inherit;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example" style="display: flex; justify-content: flex-end; margin-top: 20px; font-size: 15px;" class="page">
+                    <ul class="pagination justify-content-center" th:each="i : ${#numbers.sequence(0, totalPages)}" style="">
+                        <li class="page-item" th:classappend="${currentPage == i} ? 'active'" style="margin: 0 3px;">
+                            <a class="page-link" th:href="@{/admin/movie(pageNo=${i})}" th:text="${i+1}"></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+</body>
+</html>

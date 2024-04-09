@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{layoutAdmin :: layout-head}">
+</head>
+<body>
+<div class="container-scroller">
+    <th:block th:replace="~{layoutAdmin :: sidebar}"></th:block>
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="~{layoutAdmin :: menubar}"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!--                    <div th:insert="~{::{content}}"></div>-->
+                <div class="page-header">
+                    <h4 class="page-title"> Add Show Time </h4>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:object="${showTime}"  class="forms-sample" id="showTimeForm">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Show Time's Id</label>
+                                        <input type="text" class="form-control text-light" id="ShowTimeId"
+                                               th:field="*{showTimeId}">
+                                    </div>
+                                    <label>Time</label>
+                                    <input type="time" class="form-control text-light" id="Time"
+                                           th:field="*{Time}" placeholder="hh:mm">
+                                </div>
+                                <button type="button" class="btn btn-primary mr-2" id="submitBtn">Save  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary  mr-2" href="/admin/showtime"><i class="mdi mdi-arrow-left"></i>Back</a>
+
+            </div>
+            <th:block th:replace="~{layoutAdmin :: footer}">
+            </th:block>
+        </div>
+    </div>
+    <th:block th:replace="~{layoutAdmin :: foot}"></th:block>
+    <script th:inline="javascript">
+        $('#submitBtn').click(function () {
+            var showTimeData = {
+                time: $('#Time').val(),
+            };
+            var showTimeId = $('#ShowTimeId').val();
+            var url = '/api/v1/showtime/' + showTimeId;
+            $.ajax({
+                type: 'PUT',
+                url: url,
+                data: JSON.stringify(showTimeData),
+                contentType: 'application/json',
+                success: function (data) {
+                    alert('ShowTime updated successfully!');
+                    window.location.href = "http://localhost:8080/admin/showtime";
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

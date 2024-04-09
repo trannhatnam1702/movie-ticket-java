@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/assets/img/favcion.png"/>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" media="all"/>
+  <!-- Slick nav CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/slicknav.min.css" media="all"/>
+  <!-- Iconfont CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/icofont.css" media="all"/>
+  <!-- Owl carousel CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.css">
+  <!-- Popup CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/magnific-popup.css">
+  <!-- Main style CSS -->
+  <!-- Responsive CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css" media="all"/>
+  <link rel="stylesheet" href="/assets/css/Login.css">
+</head>
+<body>
+<div class="wrapper" id="container">
+  <!--  <span class="close">&times;</span>-->
+  <div class="form-container login-container">
+    <div class="form-login-sign">
+      <form th:action="@{/account/register}" th:object="${user}" method="post" id="register-form">
+        <div class="title-form">
+          <h1>Register</h1>
+        </div>
+        <div class="field">
+          <div class="error" th:if="${#fields.hasErrors('Email')}" th:errors="*{Email}"></div>
+          <input type="email" th:field="*{Email}" placeholder="Email address" id="email">
+        </div>
+        <div class="field">
+          <div class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+          <input type="text" th:field="*{fullName}" placeholder="Full name" id="fullname">
+        </div>
+        <div class="field">
+          <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+          <input type="text" th:field="*{username}" placeholder="Username" id="username">
+        </div>
+        <div class="field">
+          <div class="error" th:if="${#fields.hasErrors('Password')}" th:errors="*{Password}"></div>
+          <input type="password" th:field="*{Password}" placeholder="Password" id="password">
+        </div>
+        <!--        <div class="field">-->
+        <!--          <input type="password" placeholder="Confirm Password" id="password2">-->
+        <!--        </div>-->
+<!--        <div class="field">-->
+<!--&lt;!&ndash;          <div class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>&ndash;&gt;-->
+<!--          <input type="password" th:field="*{confirmPassword}" placeholder="Confirm Password" id="confirmPassword">-->
+<!--        </div>-->
+        <button type="submit" class="btn-form">Register</button>
+      </form>
+    </div>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-right">
+        <h1 class="title-overplay">Hello</h1>
+        <div class="tilte-desciptions">
+          <p>If you have an account, login here and have fun</p>
+        </div>
+        <button  onclick="window.location.href='/account/login'"  class="ghost btn-form" id="login">Login
+          <i class="lni lni-arrow-left login"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+

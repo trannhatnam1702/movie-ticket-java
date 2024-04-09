@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Moviepoint - Online Movie,Vedio and TV Show HTML Template</title>
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="/assets/img/favcion.png"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" media="all"/>
+    <!-- Slick nav CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/slicknav.min.css" media="all"/>
+    <!-- Iconfont CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/icofont.css" media="all"/>
+    <!-- Owl carousel CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.css">
+    <!-- Popup CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/magnific-popup.css">
+    <!-- Main style CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" media="all"/>
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css" media="all"/>
+    <link href="/assets/css/register.css" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .selected {
+            background: blue;
+        }
+
+        .waiting {
+            background: #12b555 !important;
+        }
+
+        .waiting:hover{
+            background: #12b555 !important;
+        }
+
+         .selected:hover {
+            background-color: blue !important;
+            color: inherit;
+        }
+
+        .circle {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%
+        }
+
+        .choose {
+            background: #eb315a;
+            border-color: #eb315a;
+        }
+
+        .available {
+            background: transparent;
+            border: 1px solid;
+        }
+
+        .unavailable {
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="buy-ticket-area" style="
+    color: #fff;
+    background: #212529;
+    width: 100vw;
+    height: 100vh;
+    margin-top: 0px;">
+    <a href="/" style="color: #fff;"><i class="icofont icofont-close"></i></a>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="buy-ticket-box">
+                <h4>Buy Tickets</h4>
+                <h5 style="color: #fff;">Seat</h5>
+                <h6 style="color: #fff;">Screen</h6>
+                <div class="ticket-box-table">
+                    <table class="ticket-table-seat">
+                        <tbody>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(1, 7)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo' "
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(8, 14)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(15, 21)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(22, 28)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(29, 35)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+
+
+                    </table>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>A</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="ticket-table-seat">
+                        <tbody >
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(36, 43)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(44, 51)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(52, 59)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(60, 67)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(68, 75)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="ticket-table-seat">
+                        <tbody>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(76, 82)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(83, 89)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(90, 96)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(97, 103)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        <tr>
+                            <th:block th:each="i: ${#numbers.sequence(104, 110)}">
+                                <td class="seatNo"
+                                    th:id="'seatNo'+${i}"
+                                    th:class="${#lists.contains(seatIds, i)} ? 'selected seatNo' : 'seatNo'"
+                                    th:onclick="${#lists.contains(seatIds, i)} ? null : 'handleClick(' + ${i} + ');'">
+                                    [[${i}]]
+                                </td>
+                            </th:block>
+                        </tr>
+                        </tr>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <script th:inline="javascript">
+                        function handleClick(i) {
+                            var item = document.getElementsByClassName("seatNo")[i - 1];
+
+                            if (item.classList.contains("active")) {
+                                item.classList.remove("active");
+                            } else {
+                                item.classList.add('active');
+                            }
+                            var ticketnumber = document.getElementById("ticketnumber")
+
+
+                            var activeElements = document.querySelectorAll(".active");
+                            var activeElementsArray = Array.from(activeElements);
+                            var Ticket = "";
+                            for (var i = 0; i < activeElementsArray.length; i++) {
+                                var text = activeElementsArray[i].innerText;
+                                Ticket += text + " "
+                                sessionStorage.setItem('seat', Ticket)
+
+                            }
+                            ticketnumber.textContent = Ticket
+                            var price = document.getElementById("price")
+                            price.textContent = (9 * activeElementsArray.length).toString() + "$";
+
+                            var pri = (9 * activeElementsArray.length).toString();
+                            document.cookie = 'price =' + pri
+                            sessionStorage.setItem('price', pri)
+
+                            var path = window.location.pathname;
+                            var parts = path.split('/');
+                            var value = parts[2];
+
+                            sessionStorage.setItem('showId', value)
+
+<!--                            console.log(session.showId);-->
+
+                            document.cookie='ticketnumber ='+ Ticket;
+
+                        }
+
+                </script>
+
+                <div class="ticket-box-available">
+                    <div class="circle choose"></div>
+                    <span>Selected</span>
+                    <div class="circle available"></div>
+                    <span>Available</span>
+                    <div class="circle unavailable"></div>
+                    <span>Unavailable</span>
+                    <div class="circle waiting"></div>
+                    <span>Waitting</span>
+                </div>
+                <a href="#" class="theme-btn">previous</a>
+                <a  onclick="redirectToPayment()">Buy</a>
+<!--                th:href="@{/buyticket/{showId}/{movieId}(showId=${showId}, movieId=${movie.movieId})}"-->
+                <form id="paymentForm" action="/buyticket/${showId}/${movie_id}" method="get">
+                    <input type="hidden" name="showId" id="showIdInput" />
+                    <input type="hidden" name="price" id="priceInput" />
+                    <input type="hidden" name="seat" id="seatInput" />
+                    <button type="submit"></button>
+                </form>
+                <input type="hidden" name="movieId" id="movieIdInput" th:value="${movie_id}"/>
+            </div>
+        </div>
+        <div class="col-lg-3 offset-lg-1">
+            <div class="buy-ticket-box mtr-30">
+                <div id="movieId"  th:text="${movie_id}" style="color: #212529;"></div>
+                <h4 >Your Information</h4>
+                <select class="form-control" onchange="showChanged(this.value)" th:field="*{id}" style="margin-bottom: 5px;
+    background: #eb315a;
+    color: #fff;
+    text-align: center;
+    border: none;">
+                    <option style="color: #fff;" value="">Select Shows</option>
+                    <option style="color: #fff;" th:each="show : ${re}" th:value="${show}" th:text="${show}"></option>
+                </select>
+                <script th:inline="javascript">
+                                function showChanged(value) {
+                                var movieIdElement = document.getElementById("movieId");
+                                var movieIdText = movieIdElement.innerText;
+
+                                    window.location.href = "/reservations/" + value + "/" + movieIdText;
+                                }
+                </script>
+                <ul>
+                    <li th:each="cinema_name : ${cinema_name}">
+                        <p>
+                            Location
+                        </p>
+
+                        <span th:text="${cinema_name}"></span>
+
+
+                    </li>
+                    <li th:each="day : ${day}">
+                        <p>DAY</p>
+
+                        <span th:text="${day}"> </span>
+
+                    </li>
+                    <li th:each="time : ${time}">
+                        <p>TIME</p>
+
+                        <span th:text="${time}"> @</span>
+
+
+                    </li>
+                    <li>
+                        <p>Movie name</p>
+                        <span th:text="${movie.movieName}"></span>
+                    </li>
+                    <li>
+                        <p>Ticket number</p>
+                        <span id="ticketnumber"></span>
+                    </li>
+                    <li>
+                        <p>Price</p>
+                        <span id="price"></span>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jquery main JS -->
+<script src="/assets/js/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/assets/js/bootstrap.min.js"></script>
+<!-- Slick nav JS -->
+<script src="/assets/js/jquery.slicknav.min.js"></script>
+<!-- owl carousel JS -->
+<script src="/assets/js/owl.carousel.min.js"></script>
+<!-- Popup JS -->
+<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+<!-- Isotope JS -->
+<script src="/assets/js/isotope.pkgd.min.js"></script>
+<!-- main JS -->
+<script src="/assets/js/main.js"></script>
+
+<script th:inline="javascript">
+     $(document).ready(function() {
+            $.ajax({
+                url: '/api/seats/datajax-seat',
+                type: 'GET',
+                success: function(data) {
+                    console.log(123);
+                    for(let i = 0; i < data.length; i++){
+                          console.log($(`#seatNo${data[i]}`).text());
+                        $(`#seatNo${data[i]}`).removeAttr("onclick");
+                      $(`#seatNo${data[i]}`).addClass("waiting")
+                    }
+                }
+            });
+
+
+                //      redirectToPayment();
+
+     })
+
+      function redirectToPayment() {
+                        var showId = sessionStorage.getItem('showId');
+                        var price = sessionStorage.getItem('price');
+                        var seat = sessionStorage.getItem('seat');
+
+                        var showIdInput = document.getElementById('showIdInput');
+                        var priceInput = document.getElementById('priceInput');
+                        var seatInput = document.getElementById('seatInput');
+
+
+                        showIdInput.value = showId;
+                        priceInput.value = price;
+                        seatInput.value = seat;
+
+
+
+                         $.ajax({
+                            url: '/api/seats/select',
+                            type: 'POST',
+                            data: {
+                              seatId: seat,
+                            },
+                            success: function(data) {
+                                var movieId = $('#movieIdInput').val();
+                                window.location.href = `/buyticket/${showId}/${movieId}`;
+                            }
+                        });
+
+                      }
+</script>
+</body>
+</html>
