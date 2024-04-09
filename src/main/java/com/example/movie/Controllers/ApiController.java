@@ -74,9 +74,17 @@ public class ApiController {
 
     @DeleteMapping("/cinemas/{id}")
     @Transactional
-    public void deleteCinema(@PathVariable Long id) {
-        if(cinemaService.getCinemaById(id) != null);
-        cinemaService.deleteCinema(id);
+    public ResponseEntity<String> deleteCinema(@PathVariable Long id) {
+        Cinema cinema = cinemaService.getCinemaById(id);
+        if (cinema == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid cinema ID");
+        }
+        try {
+            cinemaService.deleteCinema(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Cinema deleted successfully");
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while deleting cinema");
+        }
     }
 
     @PostMapping("/cinemas")
@@ -87,12 +95,14 @@ public class ApiController {
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while adding cinema", e);
         }
-
     }
 
     @PutMapping("/cinemas/{id}")
     public CinemaDto updateCinema(@RequestBody Cinema cinema, @PathVariable Long id) {
         Cinema updateCinema = cinemaService.getCinemaById(id);
+        if (updateCinema == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid cinema ID");
+        }
         updateCinema.setCinemaName(cinema.getCinemaName());
         updateCinema.setDescription(cinema.getDescription());
         updateCinema = cinemaService.addCinema(updateCinema);
