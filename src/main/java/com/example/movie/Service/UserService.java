@@ -83,7 +83,4 @@ public class UserService {
         return userRepository.getRewardPoints(username);
     }
 
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
 }

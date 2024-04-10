@@ -37,7 +37,7 @@ public class SecurityConfig {
             Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers( "/css/**", "/js/**", "/assets/**", "/", "/account/register", "/api/v1/**",
+                        .requestMatchers( "/css/**", "/js/**", "/assets/**", "/", "/account/register", "/api/v1/**","/movie/**",
                                 "/error", "/account/resetpassword","/admins/**")
                         .permitAll()
                         .requestMatchers( "/admin/**")

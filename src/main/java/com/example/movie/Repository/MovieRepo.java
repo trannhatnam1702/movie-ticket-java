@@ -26,7 +26,15 @@ public interface MovieRepo extends JpaRepository<Movie, Long> {
                 .getContent();
     }
 
-    @Query(value = "SELECT * FROM movie WHERE movie_name LIKE %?1%", nativeQuery = true)
+    @Query("""
+        SELECT m
+        FROM Movie m
+        WHERE m.writer LIKE %?1%
+            OR m.movieName LIKE %?1%
+            OR m.genres LIKE %?1%
+            OR m.director LIKE %?1%
+            OR m.language LIKE %?1%
+        """)
     List<Movie> searchMovie(String keyword);
 }
 

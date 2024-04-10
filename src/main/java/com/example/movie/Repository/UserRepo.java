@@ -84,7 +84,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Query(value = "UPDATE User u SET u.rewardPoints = :rewardPoints WHERE u.userId = :userId")
     void updateRewardPoints(@Param("rewardPoints") int rewardPoints, @Param("userId") Long userId);
 
-    @Query("SELECT u FROM User u WHERE u.email = ?1")
-    Optional<User> findByEmail(String email);
+
 }
 
