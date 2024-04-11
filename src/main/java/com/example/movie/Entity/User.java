@@ -64,4 +64,14 @@ public class User {
                 .collect(Collectors.joining(", "));
     }
 
+    public User(String email, String fullName, String username, String password) {
+        Email = email;
+        this.fullName = fullName;
+        Password = password;
+        this.username = username;
+    }
+
+    public User(){
+
+    }
 }

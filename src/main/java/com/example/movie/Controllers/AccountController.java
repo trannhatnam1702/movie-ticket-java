@@ -39,6 +39,11 @@ public class AccountController {
     @Autowired
     private ReservationRepo reservationRepo;
 
+    public AccountController(UserService userService, UserRepo userRepo) {
+        this.userService = userService;
+        this.userRepo = userRepo;
+    }
+
     public static String generateRandomString(String characters, int length) {
         Random random = new Random();
         StringBuilder sb = new StringBuilder(length);
